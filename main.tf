@@ -69,7 +69,11 @@ resource "aws_iam_role_policy_attachment" "ecr_image_action_event_filtering_lamb
 }
 resource "aws_cloudwatch_log_group" "ecr_image_action_event_filtering_lg" {
   name              = "/aws/lambda/${aws_lambda_function.ecr_image_action_event_filtering.function_name}"
-  retention_in_days = 14
+  retention_in_days = (
+    var.cloudwatch_log_group_retention_in_days_ecr_image_filter != null ?
+    var.cloudwatch_log_group_retention_in_days_ecr_image_filter :
+    var.cloudwatch_log_group_retention_in_days_general
+  )
 }
 resource "aws_iam_policy" "ecr_image_action_event_filtering_lambda_cloudwatch" {
   name   = "${local.resource_prefix}ECRImageEventFilterLambdaLogPolicy"
@@ -98,7 +102,11 @@ resource "aws_iam_role" "soci_index_generator" {
 }
 resource "aws_cloudwatch_log_group" "soci_index_generator_lg" {
   name              = "/aws/lambda/${aws_lambda_function.soci_index_generator.function_name}"
-  retention_in_days = 14
+  retention_in_days = (
+    var.cloudwatch_log_group_retention_in_days_soci_index_generator != null ?
+    var.cloudwatch_log_group_retention_in_days_soci_index_generator :
+    var.cloudwatch_log_group_retention_in_days_general
+  )
 }
 resource "aws_iam_policy" "soci_index_generator_lambda_cloudwatch" {
   name   = "${local.resource_prefix}SOCIIndexGeneratorLambdaLogPolicy"

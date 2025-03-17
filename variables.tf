@@ -50,3 +50,21 @@ variable "account_id" {
   type        = string
   description = "AWS account ID where to deploy the SOCI index builder."
 }
+
+variable "cloudwatch_log_group_retention_in_days_ecr_image_filter" {
+  description = "Number of days to retain CloudWatch log group events for the ECR image filter."
+  type        = number
+  default     = null
+}
+
+variable "cloudwatch_log_group_retention_in_days_soci_index_generator" {
+  description = "Number of days to retain CloudWatch log group events for the SOCI index generator."
+  type        = number
+  default     = null
+}
+
+variable "cloudwatch_log_group_retention_in_days_general" {
+  description = "Number of days to retain CloudWatch log group events for general purposes."
+  type        = number
+  default     = 14
+}
